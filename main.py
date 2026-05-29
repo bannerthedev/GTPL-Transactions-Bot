@@ -7,7 +7,7 @@ import logging
 import random
 from pathlib import Path
 import os
-import dotevn
+import dotenv
 
 import discord
 from discord import app_commands
