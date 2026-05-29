@@ -6,13 +6,13 @@ import json
 import logging
 import random
 from pathlib import Path
-import os
 import dotenv
+from dotenv import load_dotenv
+import os
 
 import discord
 from discord import app_commands
 from discord.ext import commands
-from dotenv import load_dotenv
 
 logging.basicConfig(level=logging.INFO)
 load_dotenv()
