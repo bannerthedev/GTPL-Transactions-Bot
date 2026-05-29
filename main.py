@@ -6,15 +6,18 @@ import json
 import logging
 import random
 from pathlib import Path
+import os
+import dotevn
 
 import discord
 from discord import app_commands
 from discord.ext import commands
+from dotenv import load_dotenv
 
 logging.basicConfig(level=logging.INFO)
+load_dotenv()
 
 # ---------------- CONFIG (fill these) ----------------
-TOKEN = "MTQ4MTExMjE0OTc1NjczOTczOQ.GvJK4k.GJzWz3CjZobFXFoft2OOk-yD1p1tWl7RL4beGE"
 GUILD_ID = 1373047202791948288  # your guild/server ID
 
 # channels
@@ -36,7 +39,7 @@ REF_ROLE_ID = 1479873276544159814
 HEAD_CASTER_ROLE_ID = 1490484339744575710
 CASTER_ROLE_ID = 1479873210932789289
 
-FAQ_CHANNEL_ID = 1487602679797518356  # replace with the channel ID where FAQ should be posted
+FAQ_CHANNEL_ID = 1507133796846403614  # replace with the channel ID where FAQ should be posted
 STREAM_WATCHER_ROLE_ID = 1509951683499659344  # 🎥 Stream Watcher
 UNBORN_CAPTAIN_ROLE_ID = 1479896172897239222  # 🚀 Unborn Captain
 EVENT_PING_ROLE_ID = 1509951725128384642      # 🎉 Event Ping
@@ -44,10 +47,12 @@ EVENT_PING_ROLE_ID = 1509951725128384642      # 🎉 Event Ping
 # ----------------------------------------------------
 
 # ---------------- FILES ----------------
-TEAMS_FILE = Path("teams.json")
-PLAYER_HISTORY_FILE = Path("player_history.json")
-INVITES_FILE = Path("invites.json")
-ROSTER_LOCK_FILE = Path("roster_lock.json")
+data_file = os.getenv("data_file", "/data")
+os.makedirs(data_file, exist_ok=True)
+TEAMS_FILE = os.path.join(data_file, "teams.json")
+PLAYER_HISTORY_FILE = os.path.join(data_file, "player_history.json")
+INVITES_FILE = os.path.join(data_file, "invites.json")
+ROSTER_LOCK_FILE = os.path.join(data_file, "roster_lock.json")
 
 
 # ---------------- HELPERS ----------------
@@ -1897,7 +1902,7 @@ async def faq(interaction: discord.Interaction):
         "> - Simply make a discord for your team, and use recruitment-center,\n"
         "> - Getting your team official is another challenge however,\n"
         "> **The first step to getting your team official is getting unborn captain role!,**\n"
-        "> - We will use <#1338475858532237312> to update you on our team situation! We pick the best teams we can from out forms, so make sure you are active and competitive!\n"
+        "> - We will use <#1479692824894247012> to update you on our team situation! We pick the best teams we can from out forms, so make sure you are active and competitive!\n"
         "> - Teams normally get selected at the start of a new season or replacing an older team during seeding season,\n"
         "> **If you are interested, use our auto roles to join!**\n\n"
         "## • Moderation Support\n\n"
@@ -1906,7 +1911,7 @@ async def faq(interaction: discord.Interaction):
         "## • Application Forms\n\n"
         "> - GTPL has a various list of positions and applications to better help the league!,\n"
         "> - These applications are looked at when needed, you will be messaged if it is accepted\n"
-        "> <#1361085463317971094>\n\n"
+        "> <#1500305586061840495>\n\n"
         "# ー Role Assign\n"
         "> 🎥 **Stream Watcher** ー Get Notified when a Live Match is occurring!\n"
         "> 🚀 **Unborn Captain** ー Allows you to apply your team to participate in the league!\n"
@@ -2283,7 +2288,7 @@ async def on_ready():
 
 
 async def main():
-    await bot.start(TOKEN)
+    await bot.start(os.getenv("TOKEN"))
 
 
 if __name__ == "__main__":
