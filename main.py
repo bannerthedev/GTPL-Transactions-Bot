@@ -47,12 +47,14 @@ EVENT_PING_ROLE_ID = 1509951725128384642      # 🎉 Event Ping
 # ----------------------------------------------------
 
 # ---------------- FILES ----------------
-data_file = os.getenv("data_file", "/data")
-os.makedirs(data_file, exist_ok=True)
-TEAMS_FILE = os.path.join(data_file, "teams.json")
-PLAYER_HISTORY_FILE = os.path.join(data_file, "player_history.json")
-INVITES_FILE = os.path.join(data_file, "invites.json")
-ROSTER_LOCK_FILE = os.path.join(data_file, "roster_lock.json")
+d# ---------------- FILES ----------------
+DATA_DIR = Path(os.getenv("data_file", "/data"))
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+TEAMS_FILE = DATA_DIR / "teams.json"
+PLAYER_HISTORY_FILE = DATA_DIR / "player_history.json"
+INVITES_FILE = DATA_DIR / "invites.json"
+ROSTER_LOCK_FILE = DATA_DIR / "roster_lock.json"
 
 
 # ---------------- HELPERS ----------------
@@ -71,7 +73,8 @@ def gtag_to_hex(code: str) -> int:
     return (r << 16) + (g << 8) + b
 
 
-def _safe_load_json(path: Path, default):
+def _safe_load_json(path: str | Path, default):
+    path = Path(path)
     if not path.exists():
         return default
     raw = path.read_text(encoding="utf-8").strip()
@@ -97,8 +100,8 @@ def load_player_history() -> dict:
     return _safe_load_json(PLAYER_HISTORY_FILE, {})
 
 
-def save_player_history(data: dict) -> None:
-    PLAYER_HISTORY_FILE.write_text(json.dumps(data, indent=4), encoding="utf-8")
+def save_invites(data: dict) -> None:
+    INVITES_FILE.write_text(json.dumps(data, indent=4), encoding="utf-8")
 
 
 def load_invites() -> dict:
