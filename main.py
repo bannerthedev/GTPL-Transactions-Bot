@@ -47,7 +47,6 @@ EVENT_PING_ROLE_ID = 1509951725128384642      # 🎉 Event Ping
 # ----------------------------------------------------
 
 # ---------------- FILES ----------------
-d# ---------------- FILES ----------------
 DATA_DIR = Path(os.getenv("data_file", "/data"))
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
